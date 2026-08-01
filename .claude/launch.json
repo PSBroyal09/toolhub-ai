@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "web",
+      "runtimeExecutable": "C:\\Windows\\System32\\cmd.exe",
+      "runtimeArgs": ["/c", "C:\\Users\\admin\\Desktop\\Tool_Hub\\scripts\\dev-web.cmd"],
+      "port": 3000
+    }
+  ]
+}

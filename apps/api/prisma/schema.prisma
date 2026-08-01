@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String     @id @default(uuid())
+  email        String     @unique
+  password     String
+  nickname     String
+  profileImage String?    @map("profile_image")
+  createdAt    DateTime   @default(now()) @map("created_at")
+  favorites    Favorite[]
+  history      History[]
+
+  @@map("users")
+}
+
+model Tool {
+  id          String     @id @default(uuid())
+  category    String
+  title       String
+  description String?
+  favorites   Favorite[]
+  history     History[]
+
+  @@map("tools")
+}
+
+model Favorite {
+  id     String @id @default(uuid())
+  userId String @map("user_id")
+  toolId String @map("tool_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tool   Tool   @relation(fields: [toolId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, toolId])
+  @@map("favorites")
+}
+
+model History {
+  id     String   @id @default(uuid())
+  userId String   @map("user_id")
+  toolId String   @map("tool_id")
+  usedAt DateTime @default(now()) @map("used_at")
+  user   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tool   Tool     @relation(fields: [toolId], references: [id], onDelete: Cascade)
+
+  @@map("history")
+}
