@@ -8,7 +8,10 @@ cmds = [
 ]
 
 [phases.build]
-cmds = ["npx --yes pnpm@11.18.0 --filter api build"]
+cmds = [
+  "npx --yes pnpm@11.18.0 --filter api exec prisma generate",
+  "npx --yes pnpm@11.18.0 --filter api build"
+]
 
 [start]
 cmd = "npx --yes pnpm@11.18.0 --filter api exec prisma migrate deploy && npx --yes pnpm@11.18.0 --filter api start:prod"
