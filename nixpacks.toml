@@ -1,0 +1,15 @@
+[phases.setup]
+nixPkgs = ["nodejs_20"]
+
+[phases.install]
+cmds = [
+  "corepack disable || true",
+  "npm install -g pnpm@11.18.0",
+  "pnpm install --frozen-lockfile"
+]
+
+[phases.build]
+cmds = ["pnpm --filter api build"]
+
+[start]
+cmd = "pnpm --filter api exec prisma migrate deploy && pnpm --filter api start:prod"
