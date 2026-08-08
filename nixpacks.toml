@@ -14,4 +14,4 @@ cmds = [
 ]
 
 [start]
-cmd = "npx --yes pnpm@11.18.0 --filter api exec prisma migrate deploy && npx --yes pnpm@11.18.0 --filter api start:prod"
+cmd = "npx --yes pnpm@11.18.0 --filter api exec prisma migrate deploy && npx --yes pnpm@11.18.0 --filter api exec prisma db seed && npx --yes pnpm@11.18.0 --filter api start:prod"
