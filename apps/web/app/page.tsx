@@ -6,6 +6,17 @@ import { NAV_ITEMS, FAVORITABLE_TOOL_IDS } from "@/lib/nav-items";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/lib/auth-context";
 import { getFavorites, addFavorite, removeFavorite } from "@/lib/api";
+import {
+  AiIcon,
+  WritingIcon,
+  CalculatorIcon,
+  TextIcon,
+  DevIcon,
+  FilesIcon,
+  QrIcon,
+  RandomIcon,
+  StudentIcon,
+} from "@/components/category-icons";
 
 function StarIcon({ filled }: { filled: boolean }) {
   return (
@@ -25,16 +36,19 @@ function StarIcon({ filled }: { filled: boolean }) {
   );
 }
 
-const CATEGORY_META: Record<string, { icon: string; description: string }> = {
-  "/ai": { icon: "🤖", description: "AI로 글을 검사하고 다듬어요" },
-  "/writing": { icon: "✍️", description: "요약·번역·첨삭까지" },
-  "/calculator": { icon: "🧮", description: "일반·BMI·할인·나이 계산" },
-  "/text": { icon: "📝", description: "글자수·단어수·읽는 시간" },
-  "/dev": { icon: "💻", description: "JSON·UUID·Base64·Hash" },
-  "/files": { icon: "🗂️", description: "이미지 압축·PDF 합치기" },
-  "/qr": { icon: "🔳", description: "QR 코드 생성 및 스캔" },
-  "/random": { icon: "🎲", description: "번호·추첨·비밀번호 생성" },
-  "/student": { icon: "🎓", description: "과제·자소서·발표 준비" },
+const CATEGORY_META: Record<
+  string,
+  { Icon: (props: { className?: string }) => React.ReactElement; description: string }
+> = {
+  "/ai": { Icon: AiIcon, description: "AI로 글을 검사하고 다듬어요" },
+  "/writing": { Icon: WritingIcon, description: "요약·번역·첨삭까지" },
+  "/calculator": { Icon: CalculatorIcon, description: "일반·BMI·할인·나이 계산" },
+  "/text": { Icon: TextIcon, description: "글자수·단어수·읽는 시간" },
+  "/dev": { Icon: DevIcon, description: "JSON·UUID·Base64·Hash" },
+  "/files": { Icon: FilesIcon, description: "이미지 압축·PDF 합치기" },
+  "/qr": { Icon: QrIcon, description: "QR 코드 생성 및 스캔" },
+  "/random": { Icon: RandomIcon, description: "번호·추첨·비밀번호 생성" },
+  "/student": { Icon: StudentIcon, description: "과제·자소서·발표 준비" },
 };
 
 export default function Home() {
@@ -102,8 +116,8 @@ export default function Home() {
               <Link href={item.href}>
                 <Card className="h-full gap-2 transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md">
                   <CardHeader className="gap-1">
-                    <span className="flex size-10 items-center justify-center rounded-xl bg-accent text-xl">
-                      {meta?.icon ?? "🔧"}
+                    <span className="flex size-10 items-center justify-center rounded-xl bg-accent text-accent-foreground">
+                      {meta ? <meta.Icon /> : null}
                     </span>
                     <CardTitle className="pt-1">{item.label}</CardTitle>
                     {meta?.description && (
