@@ -9,9 +9,10 @@ cmds = [
 
 [phases.build]
 cmds = [
-  "npx --yes pnpm@11.18.0 --filter api exec prisma generate",
-  "npx --yes pnpm@11.18.0 --filter api build"
+  "cd apps/api && npx --yes pnpm@11.18.0 exec prisma generate",
+  "cd apps/api && npx --yes pnpm@11.18.0 exec nest build",
+  "ls -la apps/api/dist || echo NO_DIST_AFTER_BUILD"
 ]
 
 [start]
-cmd = "npx --yes pnpm@11.18.0 --filter api build && npx --yes pnpm@11.18.0 --filter api exec prisma migrate deploy && npx --yes pnpm@11.18.0 --filter api exec prisma db seed && npx --yes pnpm@11.18.0 --filter api start:prod"
+cmd = "ls -la apps/api/dist || echo NO_DIST_AT_START; cd apps/api && npx --yes pnpm@11.18.0 exec prisma migrate deploy && npx --yes pnpm@11.18.0 exec prisma db seed && node dist/main"
