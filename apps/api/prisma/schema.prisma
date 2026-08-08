@@ -21,7 +21,7 @@ model User {
 }
 
 model Tool {
-  id          String     @id @default(uuid())
+  id          String     @id
   category    String
   title       String
   description String?

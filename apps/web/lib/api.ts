@@ -83,3 +83,14 @@ export interface Favorite {
 export function getFavorites() {
   return apiFetch<Favorite[]>("/favorites");
 }
+
+export function addFavorite(toolId: string) {
+  return apiFetch<Favorite>("/favorites", {
+    method: "POST",
+    body: JSON.stringify({ toolId }),
+  });
+}
+
+export function removeFavorite(favoriteId: string) {
+  return apiFetch<void>(`/favorites/${favoriteId}`, { method: "DELETE" });
+}
