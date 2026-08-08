@@ -1,4 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { Role } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 
@@ -11,10 +12,11 @@ export class UsersService {
     email: string;
     nickname: string;
     profileImage: string | null;
+    role: Role;
     createdAt: Date;
   }) {
-    const { id, email, nickname, profileImage, createdAt } = user;
-    return { id, email, nickname, profileImage, createdAt };
+    const { id, email, nickname, profileImage, role, createdAt } = user;
+    return { id, email, nickname, profileImage, role, createdAt };
   }
 
   async getProfile(userId: string) {

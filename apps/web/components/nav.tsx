@@ -22,6 +22,11 @@ export function Nav() {
     setMobileOpen(false);
   }, [pathname]);
 
+  const navItems =
+    user?.role === "ADMIN"
+      ? [...NAV_ITEMS, { href: "/admin", label: "관리자" }]
+      : NAV_ITEMS;
+
   return (
     <header className="border-b">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
@@ -30,7 +35,7 @@ export function Nav() {
         </Link>
 
         <nav className="hidden flex-1 items-center gap-1 overflow-x-auto text-sm md:flex">
-          {NAV_ITEMS.map((item) => (
+          {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -94,7 +99,7 @@ export function Nav() {
       {mobileOpen && (
         <div className="border-t md:hidden">
           <nav className="flex flex-col gap-1 px-4 py-3 text-sm">
-            {NAV_ITEMS.map((item) => (
+            {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}

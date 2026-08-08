@@ -25,6 +25,18 @@ function StarIcon({ filled }: { filled: boolean }) {
   );
 }
 
+const CATEGORY_META: Record<string, { icon: string; description: string }> = {
+  "/ai": { icon: "🤖", description: "AI로 글을 검사하고 다듬어요" },
+  "/writing": { icon: "✍️", description: "요약·번역·첨삭까지" },
+  "/calculator": { icon: "🧮", description: "일반·BMI·할인·나이 계산" },
+  "/text": { icon: "📝", description: "글자수·단어수·읽는 시간" },
+  "/dev": { icon: "💻", description: "JSON·UUID·Base64·Hash" },
+  "/files": { icon: "🗂️", description: "이미지 압축·PDF 합치기" },
+  "/qr": { icon: "🔳", description: "QR 코드 생성 및 스캔" },
+  "/random": { icon: "🎲", description: "번호·추첨·비밀번호 생성" },
+  "/student": { icon: "🎓", description: "과제·자소서·발표 준비" },
+};
+
 export default function Home() {
   const { user } = useAuth();
   // toolId -> favoriteId
@@ -64,11 +76,17 @@ export default function Home() {
   );
 
   return (
-    <div className="flex flex-col gap-8">
-      <section>
-        <h1 className="text-3xl font-bold">ToolHub AI</h1>
-        <p className="mt-2 text-muted-foreground">
-          학생, 직장인, 개발자를 위한 올인원 생산성 도구 플랫폼
+    <div className="flex flex-col gap-10">
+      <section className="flex flex-col items-center gap-4 py-8 text-center">
+        <span className="rounded-full border px-3 py-1 text-xs font-medium text-muted-foreground">
+          학생 · 직장인 · 개발자를 위한 생산성 도구
+        </span>
+        <h1 className="bg-gradient-to-br from-foreground to-primary bg-clip-text text-4xl font-bold tracking-tight text-transparent sm:text-5xl">
+          ToolHub AI
+        </h1>
+        <p className="max-w-md text-muted-foreground">
+          글자수 세기부터 QR, PDF, 개발자 도구까지 — 설치 없이 브라우저에서
+          바로 씁니다.
         </p>
       </section>
 
@@ -77,13 +95,22 @@ export default function Home() {
           const toolId = item.href.slice(1);
           const favoritable = user && FAVORITABLE_TOOL_IDS.has(toolId);
           const isFavorited = favorites.has(toolId);
+          const meta = CATEGORY_META[item.href];
 
           return (
-            <div key={item.href} className="relative">
+            <div key={item.href} className="group relative">
               <Link href={item.href}>
-                <Card className="transition-colors hover:bg-accent">
-                  <CardHeader>
-                    <CardTitle>{item.label}</CardTitle>
+                <Card className="h-full gap-2 transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md">
+                  <CardHeader className="gap-1">
+                    <span className="flex size-10 items-center justify-center rounded-xl bg-accent text-xl">
+                      {meta?.icon ?? "🔧"}
+                    </span>
+                    <CardTitle className="pt-1">{item.label}</CardTitle>
+                    {meta?.description && (
+                      <p className="text-xs text-muted-foreground">
+                        {meta.description}
+                      </p>
+                    )}
                   </CardHeader>
                 </Card>
               </Link>
@@ -92,9 +119,9 @@ export default function Home() {
                   type="button"
                   aria-label={isFavorited ? "즐겨찾기 해제" : "즐겨찾기 추가"}
                   onClick={() => toggleFavorite(toolId)}
-                  className={`absolute right-2 top-2 rounded-full p-1 transition-colors ${
+                  className={`absolute right-2 top-2 rounded-full p-1 opacity-0 transition-opacity group-hover:opacity-100 ${
                     isFavorited
-                      ? "text-yellow-500"
+                      ? "text-yellow-500 opacity-100"
                       : "text-muted-foreground hover:text-yellow-500"
                   }`}
                 >

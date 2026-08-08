@@ -39,6 +39,7 @@ export interface AuthUser {
   email: string;
   nickname: string;
   profileImage: string | null;
+  role: "USER" | "ADMIN";
   createdAt: string;
 }
 
@@ -93,4 +94,22 @@ export function addFavorite(toolId: string) {
 
 export function removeFavorite(favoriteId: string) {
   return apiFetch<void>(`/favorites/${favoriteId}`, { method: "DELETE" });
+}
+
+export interface AdminStats {
+  totalUsers: number;
+  totalFavorites: number;
+  totalTools: number;
+  toolUsage: { toolId: string; title: string; favoriteCount: number }[];
+  recentUsers: {
+    id: string;
+    nickname: string;
+    email: string;
+    role: "USER" | "ADMIN";
+    createdAt: string;
+  }[];
+}
+
+export function getAdminStats() {
+  return apiFetch<AdminStats>("/admin/stats");
 }

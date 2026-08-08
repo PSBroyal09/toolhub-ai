@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import { Role, User } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { SignupDto } from './dto/signup.dto';
 import { LoginDto } from './dto/login.dto';
@@ -23,10 +24,30 @@ export class AuthService {
     email: string;
     nickname: string;
     profileImage: string | null;
+    role: Role;
     createdAt: Date;
   }) {
-    const { id, email, nickname, profileImage, createdAt } = user;
-    return { id, email, nickname, profileImage, createdAt };
+    const { id, email, nickname, profileImage, role, createdAt } = user;
+    return { id, email, nickname, profileImage, role, createdAt };
+  }
+
+  private isAdminEmail(email: string): boolean {
+    const adminEmails = (process.env.ADMIN_EMAILS ?? '')
+      .split(',')
+      .map((e) => e.trim().toLowerCase())
+      .filter(Boolean);
+    return adminEmails.includes(email.toLowerCase());
+  }
+
+  /** ADMIN_EMAILS에 등록된 이메일이면 로그인/가입 시 자동으로 관리자 권한을 부여한다. */
+  private async ensureRole(user: User): Promise<User> {
+    if (user.role === 'ADMIN' || !this.isAdminEmail(user.email)) {
+      return user;
+    }
+    return this.prisma.user.update({
+      where: { id: user.id },
+      data: { role: 'ADMIN' },
+    });
   }
 
   async signup(dto: SignupDto) {
@@ -38,20 +59,21 @@ export class AuthService {
     }
 
     const hashed = await bcrypt.hash(dto.password, SALT_ROUNDS);
-    const user = await this.prisma.user.create({
+    let user = await this.prisma.user.create({
       data: {
         email: dto.email,
         password: hashed,
         nickname: dto.nickname,
       },
     });
+    user = await this.ensureRole(user);
 
     const accessToken = this.signToken(user.id, user.email);
     return { user: this.sanitize(user), accessToken };
   }
 
   async login(dto: LoginDto) {
-    const user = await this.prisma.user.findUnique({
+    let user = await this.prisma.user.findUnique({
       where: { email: dto.email },
     });
     if (!user) {
@@ -62,6 +84,7 @@ export class AuthService {
     if (!passwordMatches) {
       throw new UnauthorizedException('이메일 또는 비밀번호가 올바르지 않습니다.');
     }
+    user = await this.ensureRole(user);
 
     const accessToken = this.signToken(user.id, user.email);
     return { user: this.sanitize(user), accessToken };
