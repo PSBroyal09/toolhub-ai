@@ -21,11 +21,20 @@ const COOKIE_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000; // 7일
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  private cookieOptions() {
+    const isProduction = process.env.NODE_ENV === 'production';
+    return {
+      httpOnly: true,
+      // 프론트(Vercel)와 백엔드(Railway)가 서로 다른 도메인이므로 운영 환경에서는
+      // 크로스 사이트 요청에 쿠키가 실리도록 SameSite=None + Secure가 필요하다.
+      sameSite: isProduction ? ('none' as const) : ('lax' as const),
+      secure: isProduction,
+    };
+  }
+
   private setAuthCookie(res: Response, token: string) {
     res.cookie(COOKIE_NAME, token, {
-      httpOnly: true,
-      sameSite: 'lax',
-      secure: process.env.NODE_ENV === 'production',
+      ...this.cookieOptions(),
       maxAge: COOKIE_MAX_AGE_MS,
     });
   }
@@ -54,7 +63,7 @@ export class AuthController {
   @Post('logout')
   @HttpCode(200)
   logout(@Res({ passthrough: true }) res: Response) {
-    res.clearCookie(COOKIE_NAME);
+    res.clearCookie(COOKIE_NAME, this.cookieOptions());
     return { success: true };
   }
 
