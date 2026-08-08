@@ -6,6 +6,7 @@ export const NAV_ITEMS = [
   { href: "/dev", label: "개발자" },
   { href: "/files", label: "파일" },
   { href: "/qr", label: "QR" },
+  { href: "/random", label: "랜덤" },
   { href: "/student", label: "학생" },
   { href: "/favorites", label: "즐겨찾기" },
   { href: "/me", label: "마이페이지" },
