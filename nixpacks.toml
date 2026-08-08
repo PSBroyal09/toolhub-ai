@@ -4,12 +4,11 @@ nixPkgs = ["nodejs_20"]
 [phases.install]
 cmds = [
   "corepack disable || true",
-  "npm install -g pnpm@11.18.0",
-  "pnpm install --frozen-lockfile"
+  "npx --yes pnpm@11.18.0 install --frozen-lockfile"
 ]
 
 [phases.build]
-cmds = ["pnpm --filter api build"]
+cmds = ["npx --yes pnpm@11.18.0 --filter api build"]
 
 [start]
-cmd = "pnpm --filter api exec prisma migrate deploy && pnpm --filter api start:prod"
+cmd = "npx --yes pnpm@11.18.0 --filter api exec prisma migrate deploy && npx --yes pnpm@11.18.0 --filter api start:prod"
