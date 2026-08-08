@@ -2,6 +2,9 @@
   "name": "toolhub-ai",
   "private": true,
   "packageManager": "pnpm@11.18.0",
+  "engines": {
+    "node": ">=20.11.0"
+  },
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",
