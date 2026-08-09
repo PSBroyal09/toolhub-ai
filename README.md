@@ -34,13 +34,16 @@ toolhub-ai/
    cp apps/api/.env.example apps/api/.env
    ```
 
+   로컬에서 관리자 계정을 테스트하려면 `apps/api/.env`의 `ADMIN_EMAILS`에 본인 이메일을 넣어두세요.
+   그 이메일로 가입/로그인하는 순간 자동으로 관리자 권한이 부여됩니다.
+
 3. DB / Redis 기동 (Docker Desktop 필요)
 
    ```bash
    docker compose up -d
    ```
 
-4. DB 스키마 적용
+4. DB 스키마 적용 (`prisma.seed` 설정 덕분에 도구 목록 시드 데이터도 함께 채워집니다)
 
    ```bash
    pnpm --filter api exec prisma migrate dev
@@ -65,7 +68,8 @@ pnpm turbo build
 
 - 백엔드(`apps/api`)는 Railway(Nixpacks 빌드, `railway.json`/`nixpacks.toml`)에 배포됩니다.
   시작 시 `prisma migrate deploy` + 시드 스크립트를 자동 실행합니다.
-- 프론트엔드(`apps/web`)는 API 호출을 Next.js rewrites로 프록시해 크로스사이트 쿠키 유실 문제를 피합니다.
+- 프론트엔드(`apps/web`)는 Vercel에 배포됩니다. API 호출은 Next.js rewrites로 같은 도메인(`/api/*`)을 통해
+  Railway로 프록시해, 서로 다른 도메인 간 쿠키가 서드파티로 취급되어 유실되는 문제를 피합니다.
 
 ## 구현된 기능
 
