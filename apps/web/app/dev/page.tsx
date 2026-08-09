@@ -7,6 +7,10 @@ import { Base64Tool } from "@/components/dev-tools/base64-tool";
 import { UrlEncodeTool } from "@/components/dev-tools/url-encode-tool";
 import { HashGenerator } from "@/components/dev-tools/hash-generator";
 import { JwtDecoder } from "@/components/dev-tools/jwt-decoder";
+import { TimestampConverter } from "@/components/dev-tools/timestamp-converter";
+import { RegexTester } from "@/components/dev-tools/regex-tester";
+import { TextDiff } from "@/components/dev-tools/text-diff";
+import { CronParser } from "@/components/dev-tools/cron-parser";
 
 const TABS = [
   { value: "json", label: "JSON", component: <JsonFormatter /> },
@@ -15,6 +19,10 @@ const TABS = [
   { value: "url", label: "URL", component: <UrlEncodeTool /> },
   { value: "hash", label: "Hash", component: <HashGenerator /> },
   { value: "jwt", label: "JWT", component: <JwtDecoder /> },
+  { value: "timestamp", label: "타임스탬프", component: <TimestampConverter /> },
+  { value: "regex", label: "정규식", component: <RegexTester /> },
+  { value: "diff", label: "Diff", component: <TextDiff /> },
+  { value: "cron", label: "Cron", component: <CronParser /> },
 ];
 
 export default function DevPage() {

@@ -1,9 +1,9 @@
 export const NAV_ITEMS = [
+  { href: "/dev", label: "개발자" },
   { href: "/ai", label: "AI" },
   { href: "/writing", label: "글쓰기" },
   { href: "/calculator", label: "계산기" },
   { href: "/text", label: "텍스트" },
-  { href: "/dev", label: "개발자" },
   { href: "/files", label: "파일" },
   { href: "/qr", label: "QR" },
   { href: "/random", label: "랜덤" },
