@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
-import { getAdminStats, type AdminStats } from "@/lib/api";
+import { getAdminStats, ApiError, type AdminStats } from "@/lib/api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 function StatCard({ label, value }: { label: string; value: number }) {
@@ -35,7 +35,13 @@ export default function AdminPage() {
     }
     getAdminStats()
       .then(setStats)
-      .catch(() => setError("통계를 불러오지 못했습니다."));
+      .catch((err) => {
+        if (err instanceof ApiError) {
+          setError(`통계를 불러오지 못했습니다. (${err.status} ${err.message})`);
+        } else {
+          setError("통계를 불러오지 못했습니다. (네트워크 오류)");
+        }
+      });
   }, [loading, user, router]);
 
   if (loading || !user || user.role !== "ADMIN") {
