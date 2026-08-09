@@ -1,4 +1,7 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
+// Next.js rewrites (next.config.ts) proxy this to NEXT_PUBLIC_API_URL server-side,
+// so the browser only ever talks to same-origin /api/* - cookies stay first-party
+// even though the real backend lives on a different domain (Railway vs Vercel).
+const API_URL = "/api";
 
 export class ApiError extends Error {
   status: number;
