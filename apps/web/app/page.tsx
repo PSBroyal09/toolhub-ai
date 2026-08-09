@@ -84,10 +84,6 @@ export default function Home() {
         <h1 className="bg-gradient-to-br from-foreground to-primary bg-clip-text text-4xl font-bold tracking-tight text-transparent sm:text-5xl">
           ToolHub AI
         </h1>
-        <p className="max-w-md text-muted-foreground">
-          글자수 세기부터 QR, PDF, 개발자 도구까지 — 설치 없이 브라우저에서
-          바로 씁니다.
-        </p>
       </section>
 
       <section className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
