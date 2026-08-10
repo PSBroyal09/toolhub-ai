@@ -1,6 +1,7 @@
 "use client";
 
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { PageHeader } from "@/components/page-header";
 import { ImageCompressor } from "@/components/file-tools/image-compressor";
 import { ImageConverter } from "@/components/file-tools/image-converter";
 import { PdfMerge } from "@/components/file-tools/pdf-merge";
@@ -16,7 +17,10 @@ const TABS = [
 export default function FilesPage() {
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-2xl font-bold">파일 도구</h1>
+      <PageHeader
+        title="파일 도구"
+        description="이미지 압축·변환, PDF 병합·분할을 브라우저에서 바로 처리합니다."
+      />
 
       <Tabs defaultValue="compress">
         <TabsList>

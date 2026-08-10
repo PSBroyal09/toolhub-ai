@@ -7,6 +7,7 @@ import { useAuth } from "@/lib/auth-context";
 import { getFavorites, removeFavorite, type Favorite } from "@/lib/api";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { PageHeader } from "@/components/page-header";
 
 export default function FavoritesPage() {
   const router = useRouter();
@@ -41,7 +42,7 @@ export default function FavoritesPage() {
 
   return (
     <div className="flex flex-col gap-4">
-      <h1 className="text-2xl font-bold">즐겨찾기</h1>
+      <PageHeader title="즐겨찾기" description="자주 쓰는 도구를 모아두고 바로 열어보세요." />
       {fetching ? (
         <p className="text-muted-foreground">불러오는 중...</p>
       ) : favorites.length === 0 ? (

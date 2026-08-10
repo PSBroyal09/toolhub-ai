@@ -1,6 +1,7 @@
 "use client";
 
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { PageHeader } from "@/components/page-header";
 import { GeneralCalculator } from "@/components/calculators/general-calculator";
 import { BmiCalculator } from "@/components/calculators/bmi-calculator";
 import { DiscountCalculator } from "@/components/calculators/discount-calculator";
@@ -20,7 +21,10 @@ const TABS = [
 export default function CalculatorPage() {
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-2xl font-bold">계산기</h1>
+      <PageHeader
+        title="계산기"
+        description="일반 계산부터 BMI, 할인율, 날짜, 나이 계산까지 한 곳에서."
+      />
 
       <Tabs defaultValue="general">
         <TabsList>

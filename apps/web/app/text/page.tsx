@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
+import { PageHeader } from "@/components/page-header";
 import { computeTextStats, formatDuration } from "@/lib/text-stats";
 
 export default function TextPage() {
@@ -22,12 +23,10 @@ export default function TextPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <div>
-        <h1 className="text-2xl font-bold">글자수 세기</h1>
-        <p className="mt-1 text-sm text-muted-foreground">
-          텍스트를 입력하면 실시간으로 통계가 계산됩니다.
-        </p>
-      </div>
+      <PageHeader
+        title="글자수 세기"
+        description="텍스트를 입력하면 실시간으로 통계가 계산됩니다."
+      />
 
       <Textarea
         value={text}

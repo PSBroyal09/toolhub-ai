@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
 import { getAdminStats, ApiError, type AdminStats } from "@/lib/api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { PageHeader } from "@/components/page-header";
 
 function StatCard({ label, value }: { label: string; value: number }) {
   return (
@@ -50,7 +51,7 @@ export default function AdminPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-2xl font-bold">관리자 대시보드</h1>
+      <PageHeader title="관리자 대시보드" description="회원, 즐겨찾기, 도구 사용 현황을 한눈에 확인하세요." />
 
       {error && <p className="text-sm text-destructive">{error}</p>}
 

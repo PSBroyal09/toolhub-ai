@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { NAV_ITEMS } from "@/lib/nav-items";
 import { useAuth } from "@/lib/auth-context";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 function navLinkClass(active: boolean) {
   return `rounded-md px-3 py-1.5 whitespace-nowrap hover:bg-accent hover:text-accent-foreground ${
@@ -47,6 +48,7 @@ export function Nav() {
         </nav>
 
         <div className="hidden shrink-0 items-center gap-2 md:flex">
+          <ThemeToggle />
           {loading ? null : user ? (
             <>
               <span className="text-sm text-muted-foreground">
@@ -77,23 +79,26 @@ export function Nav() {
           )}
         </div>
 
-        <button
-          type="button"
-          className="flex size-8 shrink-0 items-center justify-center rounded-md hover:bg-accent md:hidden"
-          aria-label={mobileOpen ? "메뉴 닫기" : "메뉴 열기"}
-          aria-expanded={mobileOpen}
-          onClick={() => setMobileOpen((open) => !open)}
-        >
-          {mobileOpen ? (
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
-            </svg>
-          ) : (
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M4 6h16M4 12h16M4 18h16" strokeLinecap="round" />
-            </svg>
-          )}
-        </button>
+        <div className="flex shrink-0 items-center gap-1 md:hidden">
+          <ThemeToggle />
+          <button
+            type="button"
+            className="flex size-8 shrink-0 items-center justify-center rounded-md hover:bg-accent"
+            aria-label={mobileOpen ? "메뉴 닫기" : "메뉴 열기"}
+            aria-expanded={mobileOpen}
+            onClick={() => setMobileOpen((open) => !open)}
+          >
+            {mobileOpen ? (
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
+              </svg>
+            ) : (
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M4 6h16M4 12h16M4 18h16" strokeLinecap="round" />
+              </svg>
+            )}
+          </button>
+        </div>
       </div>
 
       {mobileOpen && (

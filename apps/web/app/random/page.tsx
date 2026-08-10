@@ -1,6 +1,7 @@
 "use client";
 
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { PageHeader } from "@/components/page-header";
 import { RandomNumber } from "@/components/random-tools/random-number";
 import { RandomDraw } from "@/components/random-tools/random-draw";
 import { RandomPassword } from "@/components/random-tools/random-password";
@@ -16,7 +17,10 @@ const TABS = [
 export default function RandomPage() {
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-2xl font-bold">랜덤 도구</h1>
+      <PageHeader
+        title="랜덤 도구"
+        description="번호 추첨부터 비밀번호, 닉네임 생성까지."
+      />
 
       <Tabs defaultValue="number">
         <TabsList>

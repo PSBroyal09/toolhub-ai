@@ -1,6 +1,7 @@
 "use client";
 
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { PageHeader } from "@/components/page-header";
 import { QrGenerator } from "@/components/qr-tools/qr-generator";
 import { QrScanner } from "@/components/qr-tools/qr-scanner";
 
@@ -12,7 +13,7 @@ const TABS = [
 export default function QrPage() {
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-2xl font-bold">QR 도구</h1>
+      <PageHeader title="QR 도구" description="QR 코드를 만들고, 카메라로 스캔하세요." />
 
       <Tabs defaultValue="generate">
         <TabsList>

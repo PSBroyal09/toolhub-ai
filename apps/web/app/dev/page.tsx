@@ -1,6 +1,7 @@
 "use client";
 
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { PageHeader } from "@/components/page-header";
 import { JsonFormatter } from "@/components/dev-tools/json-formatter";
 import { UuidGenerator } from "@/components/dev-tools/uuid-generator";
 import { Base64Tool } from "@/components/dev-tools/base64-tool";
@@ -28,7 +29,10 @@ const TABS = [
 export default function DevPage() {
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-2xl font-bold">개발자 도구</h1>
+      <PageHeader
+        title="개발자 도구"
+        description="JSON, 해시, 정규식, cron까지 — 자주 쓰는 개발 유틸리티 모음입니다."
+      />
 
       <Tabs defaultValue="json">
         <TabsList>
